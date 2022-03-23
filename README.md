@@ -1,6 +1,3 @@
-Original App Design Project - README Template
-===
-# comment from after opening from vcs in andriod studio
 # Clicker Quest
 
 ## Table of Contents
