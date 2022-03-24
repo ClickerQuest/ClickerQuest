@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                 goToMainActivity()
             } else {
                 e.printStackTrace()
-                Toast.makeText(this,"Error signing up", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Username already taken", Toast.LENGTH_SHORT).show()
             }
         }
     }
