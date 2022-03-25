@@ -38,6 +38,10 @@ Clicker Quest is a fun clicker role-playing game! Click as fast as you can, as l
 * User can sign up and login to save their game data across devices
 * Add animations to creatures when they are attacked
 
+**Video Walkthrough
+Here's a walkthrough of implemented user stories for Sprint 1:
+![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/81489476/160213514-17c9e8f1-2e39-4e2c-97ad-c4a9e19b2c6f.gif)
+
 ### 2. Screen Archetypes
 
 * Stream screen (home/game screen)
