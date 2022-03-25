@@ -25,18 +25,20 @@ Clicker Quest is a fun clicker role-playing game! Click as fast as you can, as l
 
 **Required Must-have Stories**
 
-* User can click on creature to damage it
-* User can earn coins every time he attacks a creature
-* Coins will generate while in the app and off the app
-* User can spend coins in the upgrade screen to increase attack power and other stats
-* Defeating an enemy will spawn a new enemy with more health 
-* User can use the bottom navigation bar to navigate to other screen(s) (upgrade screen, shop screen)
+- [X] Home screen displays all necessary assets (gold, atk power, etc)
+- [X] Bottom bar navigation to home screen and upgrade screen
+- [ ] User can click on creature to damage it
+- [ ] User can earn coins every time he attacks a creature
+- [ ] Coins will generate while in the app and off the app
+- [ ] User can spend coins in the upgrade screen to increase attack power and other stats
+- [ ] Defeating an enemy will spawn a new enemy with more health 
+- [ ] User can use the bottom navigation bar to navigate to other screen(s) (upgrade screen, shop screen)
 
 **Optional Nice-to-have Stories**
 
-* Shop feature where users can use real money to purchase currency
-* User can sign up and login to save their game data across devices
-* Add animations to creatures when they are attacked
+- [ ] Shop feature where users can use real money to purchase currency
+- [ ] User can sign up and login to save their game data across devices
+- [ ] Add animations to creatures when they are attacked
 
 **Video Walkthrough
 Here's a walkthrough of implemented user stories for Sprint 1:
