@@ -10,6 +10,7 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.parse-community.Parse-SDK-Android/parse/1.26.0/4ae8c199222846b7ed1bdc357d5b3c800c01cecc/parse-1.26.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.parse-community.Parse-SDK-Android/parse/1.26.0/e72908f39d30af5bbf7f178a867032b314be095a/parse-1.26.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

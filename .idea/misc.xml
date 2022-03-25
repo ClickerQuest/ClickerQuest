@@ -10,6 +10,13 @@
         <entry key="..\:/Users/dong5/Desktop/study/andiorid/clickerQuest/app/src/main/res/layout/upgrade_layout.xml" value="0.264" />
         <entry key="..\:/Users/dong5/Desktop/study/andiorid/clickerQuest/app/src/main/res/layout/upgrade_screen.xml" value="0.264" />
         <entry key="..\:/Users/dong5/Desktop/study/andiorid/clickerQuest/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.24947916666666667" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.5203125" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.521875" />
+        <entry key="app/src/main/res/layout/fragment_upgrade.xml" value="0.2833333333333333" />
+        <entry key="app/src/main/res/layout/upgrade_layout.xml" value="0.5203125" />
+        <entry key="app/src/main/res/layout/upgrade_screen.xml" value="0.5" />
+        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.5123076923076924" />
       </map>
     </option>
   </component>
