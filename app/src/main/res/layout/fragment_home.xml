@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/attack_power_Count" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/monsterImage"
             android:layout_width="300dp"
             android:layout_height="500dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -70,9 +70,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Monster health (current health / total health)"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintBottom_toBottomOf="@+id/monsterImage"
+            app:layout_constraintEnd_toEndOf="@+id/monsterImage"
+            app:layout_constraintStart_toStartOf="@+id/monsterImage"
             app:layout_constraintTop_toBottomOf="@+id/monster_name" />
 
         <TextView
@@ -81,8 +81,8 @@
             android:layout_height="wrap_content"
             android:text="Monster name"
             android:layout_marginTop="350dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView2"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintEnd_toEndOf="@+id/monsterImage"
+            app:layout_constraintStart_toStartOf="@+id/monsterImage"
+            app:layout_constraintTop_toTopOf="@+id/monsterImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
