@@ -10,9 +10,7 @@ import android.widget.*
 import com.bumptech.glide.Glide
 import com.example.clickerquest.Monster
 import com.example.clickerquest.R
-import com.parse.ParseFile
-import com.parse.ParseQuery
-import com.parse.ParseUser
+import com.parse.*
 
 class HomeFragment : Fragment() {
 
@@ -60,14 +58,20 @@ class HomeFragment : Fragment() {
     }
 
     open fun getMonsters(stage: Int){
-        val monster = Monster()
         val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
         query.whereEqualTo("stageNumber", stage)
-
-        Glide.with(this).load(monster.getImage()?.url).into(imageView2)
-        monster_name.text = Monster.MONSTER_NAME
-        monster_health.text = Monster.MONSTER_HEALTH
-        stage_number.text = Monster.MONSTER_STAGE
-
+        query.findInBackground(object: FindCallback<Monster> {
+            override fun done(objects: MutableList<Monster>?, e: ParseException?) {
+                if(e != null) {
+                    Log.e("Monsters", "Error getting monsters")
+                }
+                else {
+                    //Glide.with(view.context).load(monster.getImage()?.url).into(imageView2)
+                    monster_name.text = Monster.MONSTER_NAME
+                    //    monster_health.text = Monster.MONSTER_HEALTH
+                    //    stage_number.text = Monster.MONSTER_STAGE
+                }
+            }
+        })
     }
 }
