@@ -5,9 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import com.example.clickerquest.R
+import com.parse.ParseUser
 
 class HomeFragment : Fragment() {
+
+    lateinit var activesetting2:ImageButton
+
+    lateinit var imageView2:ImageView
+
+    lateinit var stage_number: TextView
+    lateinit var monster_health:TextView
+    lateinit var gold_count:TextView
+    lateinit var monster_name:TextView
+    lateinit var attack_power_count:TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -17,4 +29,27 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //init objects
+        activesetting2 = view.findViewById(R.id.activesetting2)
+
+        imageView2 = view.findViewById(R.id.imageView2)
+
+        stage_number = view.findViewById(R.id.stage_number)
+        monster_health = view.findViewById(R.id.monster_health)
+        gold_count = view.findViewById(R.id.gold_Count)
+        monster_name = view.findViewById(R.id.monster_name)
+        attack_power_count = view.findViewById(R.id.attack_power_Count)
+
+        imageView2.setOnClickListener {
+
+            onImageClicked()
+        }
+
+    }
+
+    private fun onImageClicked() {
+
+    }
 }

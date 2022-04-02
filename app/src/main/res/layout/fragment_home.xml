@@ -8,7 +8,7 @@
 
 
         <ImageButton
-            android:id="@+id/_activesetting2"
+            android:id="@+id/activesetting2"
             android:layout_width="360px"
             android:layout_height="61dp"
             android:layout_gravity="center"
