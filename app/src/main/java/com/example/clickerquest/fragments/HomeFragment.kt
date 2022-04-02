@@ -1,20 +1,24 @@
 package com.example.clickerquest.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.bumptech.glide.Glide
+import com.example.clickerquest.Monster
 import com.example.clickerquest.R
+import com.parse.ParseFile
+import com.parse.ParseQuery
 import com.parse.ParseUser
 
 class HomeFragment : Fragment() {
 
-    lateinit var activesetting2:ImageButton
+    lateinit var activesetting2: ImageButton
 
     lateinit var imageView2:ImageView
-
     lateinit var stage_number: TextView
     lateinit var monster_health:TextView
     lateinit var gold_count:TextView
@@ -33,14 +37,16 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //init objects
         activesetting2 = view.findViewById(R.id.activesetting2)
-
         imageView2 = view.findViewById(R.id.imageView2)
-
         stage_number = view.findViewById(R.id.stage_number)
         monster_health = view.findViewById(R.id.monster_health)
         gold_count = view.findViewById(R.id.gold_Count)
         monster_name = view.findViewById(R.id.monster_name)
         attack_power_count = view.findViewById(R.id.attack_power_Count)
+
+        var stage = 1
+
+        getMonsters(stage)
 
         imageView2.setOnClickListener {
 
@@ -50,6 +56,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun onImageClicked() {
+        Log.i("img", "is clicked")
+    }
+
+    open fun getMonsters(stage: Int){
+        val monster = Monster()
+        val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
+        query.whereEqualTo("stageNumber", stage)
+
+        Glide.with(this).load(monster.getImage()?.url).into(imageView2)
+        monster_name.text = Monster.MONSTER_NAME
+        monster_health.text = Monster.MONSTER_HEALTH
+        stage_number.text = Monster.MONSTER_STAGE
 
     }
 }
