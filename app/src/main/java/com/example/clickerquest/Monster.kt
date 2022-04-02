@@ -38,6 +38,5 @@ class Monster : ParseObject() {
         const val MONSTER_IMAGE = "monsterImage"
         const val MONSTER_STAGE = "stageNumber"
         const val GOLD = "coin_drop"
-        const val ATK_PWR = "atk_pwr"
     }
 }
