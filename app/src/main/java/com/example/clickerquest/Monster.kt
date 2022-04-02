@@ -7,15 +7,15 @@ import com.parse.ParseUser
 
 @ParseClassName("Monster")
 class Monster : ParseObject() {
-    fun getName(): String?{
+    fun getName(): String? {
         return getString(MONSTER_NAME)
     }
 
-    fun getHealth(): Int? {
+    fun getHealth(): Int {
         return getInt(MONSTER_HEALTH)
     }
 
-    fun getCurrentHealth(): Int? {
+    fun getCurrentHealth(): Int {
         return getInt(MONSTER_CURRENTHP)
     }
 
@@ -23,11 +23,11 @@ class Monster : ParseObject() {
         return getParseFile(MONSTER_IMAGE)
     }
 
-    fun getStage(): Int? {
+    fun getStage(): Int {
         return getInt(MONSTER_STAGE)
     }
 
-    fun getGold(): Int? {
+    fun getGold(): Int {
         return getInt(GOLD)
     }
 

@@ -2,15 +2,18 @@ package com.example.clickerquest.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import com.bumptech.glide.Glide
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.example.clickerquest.Monster
 import com.example.clickerquest.R
-import com.parse.*
+import com.parse.FindCallback
+import com.parse.ParseException
+import com.parse.ParseQuery
 
 class HomeFragment : Fragment() {
 
@@ -42,9 +45,6 @@ class HomeFragment : Fragment() {
         monster_name = view.findViewById(R.id.monster_name)
         attack_power_count = view.findViewById(R.id.attack_power_Count)
 
-        var monster = Monster()
-        var stage = 1
-
         getMonsters(stage)
 
         imageView2.setOnClickListener {
@@ -55,7 +55,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun onImageClicked() {
+        currenthp--
+        monster_health.text = currenthp.toString()
         Log.i("img", "is clicked")
+
+        if(currenthp == 0)
+            Log.i("img", "monster killed")
     }
 
     open fun getMonsters(stage: Int){
@@ -67,10 +72,27 @@ class HomeFragment : Fragment() {
                     Log.e("Monsters", "Error getting monsters $e")
                 }
                 else {
+                    val results = query.find()
+                    if (!results.isEmpty()) {
+                        val objectId = results[0].objectId
+                        Log.i("Monsters", "$objectId")
+
+                        monster_name.text = results[0].getName()
+                        monster_health.text = results[0].getHealth().toString()
+                        currenthp = results[0].getHealth()
+                    }
                     //    monster_health.text = Monster.MONSTER_HEALTH
                     //    stage_number.text = Monster.MONSTER_STAGE
                 }
             }
         })
+    }
+
+    companion object{
+        //monster + stage info
+        var stage = 1
+        var currenthp = 1
+        var attackpower = 1
+        var playerlvl = 1
     }
 }
