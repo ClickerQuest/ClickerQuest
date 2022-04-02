@@ -42,6 +42,7 @@ class HomeFragment : Fragment() {
         monster_name = view.findViewById(R.id.monster_name)
         attack_power_count = view.findViewById(R.id.attack_power_Count)
 
+        var monster = Monster()
         var stage = 1
 
         getMonsters(stage)
@@ -59,15 +60,13 @@ class HomeFragment : Fragment() {
 
     open fun getMonsters(stage: Int){
         val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
-        query.whereEqualTo("stageNumber", stage)
+        query.whereEqualTo(Monster.MONSTER_STAGE, stage)
         query.findInBackground(object: FindCallback<Monster> {
             override fun done(objects: MutableList<Monster>?, e: ParseException?) {
                 if(e != null) {
-                    Log.e("Monsters", "Error getting monsters")
+                    Log.e("Monsters", "Error getting monsters $e")
                 }
                 else {
-                    //Glide.with(view.context).load(monster.getImage()?.url).into(imageView2)
-                    monster_name.text = Monster.MONSTER_NAME
                     //    monster_health.text = Monster.MONSTER_HEALTH
                     //    stage_number.text = Monster.MONSTER_STAGE
                 }

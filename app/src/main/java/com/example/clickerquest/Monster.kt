@@ -31,10 +31,6 @@ class Monster : ParseObject() {
         return getInt(GOLD)
     }
 
-    fun getMonster(): ParseUser? {
-        return getParseUser(KEY_USER)
-    }
-
     companion object{
         const val MONSTER_NAME = "name"
         const val MONSTER_HEALTH = "base_health"
@@ -42,6 +38,6 @@ class Monster : ParseObject() {
         const val MONSTER_IMAGE = "monsterImage"
         const val MONSTER_STAGE = "stageNumber"
         const val GOLD = "coin_drop"
-        const val KEY_USER = "objectId"
+        const val ATK_PWR = "atk_pwr"
     }
 }
