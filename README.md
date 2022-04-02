@@ -27,6 +27,7 @@ Clicker Quest is a fun clicker role-playing game! Click as fast as you can, as l
 
 - [X] Home screen displays all necessary assets (gold, atk power, etc)
 - [X] Bottom bar navigation to home screen and upgrade screen
+- [x] Monster assets are shown on the home screen (image, name, health)
 - [ ] User can click on creature to damage it
 - [ ] User can earn coins every time he attacks a creature
 - [ ] Coins will generate while in the app and off the app
