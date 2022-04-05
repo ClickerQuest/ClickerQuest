@@ -9,11 +9,13 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.clickerquest.Monster
 import com.example.clickerquest.R
 import com.parse.FindCallback
 import com.parse.ParseException
 import com.parse.ParseQuery
+import com.parse.ParseUser
 
 class HomeFragment : Fragment() {
 
@@ -65,27 +67,46 @@ class HomeFragment : Fragment() {
 
     open fun getMonsters(stage: Int){
         val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
+        val query_player = ParseUser.getQuery()
         query.whereEqualTo(Monster.MONSTER_STAGE, stage)
+        query_player.whereEqualTo("username", ParseUser.getCurrentUser())
         query.findInBackground(object: FindCallback<Monster> {
             override fun done(objects: MutableList<Monster>?, e: ParseException?) {
-                if(e != null) {
+                if (e != null) {
                     Log.e("Monsters", "Error getting monsters $e")
-                }
-                else {
+                } else {
                     val results = query.find()
                     if (!results.isEmpty()) {
                         val objectId = results[0].objectId
                         Log.i("Monsters", "$objectId")
 
+                        //monster
                         monster_name.text = results[0].getName()
                         monster_health.text = results[0].getHealth().toString()
                         currenthp = results[0].getHealth()
+                        view?.let {
+                            Glide.with(it.context).load(results[0].getImage()?.url).into(imageView2)
+                        }
+
                     }
-                    //    monster_health.text = Monster.MONSTER_HEALTH
-                    //    stage_number.text = Monster.MONSTER_STAGE
                 }
             }
         })
+        query_player.findInBackground { objects, e ->
+            if (e != null) {
+                Log.e("User", "Error getting user $e")
+            } else {
+                val results = query.find()
+                if (!results.isEmpty()) {
+                    val objectId = results[0].objectId
+                    Log.i("User", "$objectId")
+
+                    //player
+                    gold_count.text = (results[0].getInt("coins")).toString()
+                    attack_power_count.text = (results[0].getInt("attack_power")).toString()
+                }
+            }
+        }
     }
 
     companion object{

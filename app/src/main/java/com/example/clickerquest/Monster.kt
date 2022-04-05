@@ -3,7 +3,6 @@ package com.example.clickerquest
 import com.parse.ParseClassName
 import com.parse.ParseFile
 import com.parse.ParseObject
-import com.parse.ParseUser
 
 @ParseClassName("Monster")
 class Monster : ParseObject() {
