@@ -3,14 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp">
 
     <TextView
         android:id="@+id/upgrade_description"
         android:layout_width="253dp"
         android:layout_height="69dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:layout_marginStart="8dp"
+        android:gravity="center_vertical"
+        android:text=" Buy Attack Power"
+        android:textSize="10pt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,7 +22,7 @@
         android:id="@+id/upgrade_button"
         android:layout_width="108dp"
         android:layout_height="42dp"
-        android:text="Button"
+        android:text="BUY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toEndOf="@+id/upgrade_description"
@@ -29,7 +33,8 @@
         android:layout_width="113dp"
         android:layout_height="32dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:gravity="center"
+        android:text="AP"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.377"
         app:layout_constraintStart_toEndOf="@+id/upgrade_description"
