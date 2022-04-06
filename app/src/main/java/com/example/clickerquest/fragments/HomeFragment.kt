@@ -22,15 +22,6 @@ import com.parse.ParseUser
 
 class HomeFragment : Fragment() {
 
-    lateinit var activesetting2: ImageButton
-
-    lateinit var imageView2:ImageView
-    lateinit var stage_number: TextView
-    lateinit var monster_health:TextView
-    lateinit var gold_count:TextView
-    lateinit var monster_name:TextView
-    lateinit var attack_power_count:TextView
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,18 +60,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun onImageClicked() {
-        currenthp--
+        currenthp -= attackpower
         monster_health.text = currenthp.toString()
         Log.i("Monster", "is clicked")
 
-        if(currenthp == 0){
+        if(currenthp <= 0){
             Log.i("Monster", "is killed")
             stage++
             stage_number.text = "Stage $stage"
             player_gold += award_gold
             Log.i("User", "+ $player_gold")
             awardGold(player_gold)
-            if(stage == 5){
+            if(stage > 5){
                 stage = 1
             }
             getMonsters(stage)
@@ -132,8 +123,9 @@ class HomeFragment : Fragment() {
 
                     //player
                     player_gold = results[0].getInt("gold")
-                    gold_count.text = (results[0].getInt("gold")).toString()
-                    attack_power_count.text = (results[0].getInt("attack_power")).toString()
+                    gold_count.text = player_gold.toString()
+                    attackpower = results[0].getInt("attack_power")
+                    attack_power_count.text = attackpower.toString()
                 }
                 else{
                     Log.e("User", "cannot find user")
@@ -143,6 +135,14 @@ class HomeFragment : Fragment() {
     }
 
     companion object{
+        lateinit var activesetting2: ImageButton
+
+        lateinit var imageView2:ImageView
+        lateinit var stage_number: TextView
+        lateinit var monster_health:TextView
+        lateinit var gold_count:TextView
+        lateinit var monster_name:TextView
+        lateinit var attack_power_count:TextView
         //monster + stage info
         var stage = 1
         var currenthp = 1

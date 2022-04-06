@@ -35,7 +35,7 @@ class Settings : AppCompatActivity() {
         finish()
     }
 
-    private fun goToMainActivity() {
+    open fun goToMainActivity() {
         val intent = Intent(this@Settings, MainActivity::class.java)
         startActivity(intent)
         finish()

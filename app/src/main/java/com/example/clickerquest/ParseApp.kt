@@ -8,6 +8,7 @@ class ParseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         ParseObject.registerSubclass(Monster::class.java)
+        ParseObject.registerSubclass(Upgrades::class.java)
         Parse.initialize(
             Parse.Configuration.Builder(this)
                 .applicationId(getString(R.string.back4app_app_id))
