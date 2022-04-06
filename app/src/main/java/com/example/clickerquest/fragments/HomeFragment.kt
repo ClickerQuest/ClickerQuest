@@ -50,19 +50,25 @@ class HomeFragment : Fragment() {
         getMonsters(stage)
 
         imageView2.setOnClickListener {
-
             onImageClicked()
         }
 
     }
 
     private fun onImageClicked() {
+        if(stage > 5){
+            stage = 1
+        }
+
         currenthp--
         monster_health.text = currenthp.toString()
         Log.i("img", "is clicked")
 
-        if(currenthp == 0)
+        if(currenthp == 0){
             Log.i("img", "monster killed")
+            stage++
+            getMonsters(stage)
+        }
     }
 
     open fun getMonsters(stage: Int){
@@ -102,6 +108,7 @@ class HomeFragment : Fragment() {
                     Log.i("User", "$objectId")
 
                     //player
+                    player_gold = results[0].getInt("coins")
                     gold_count.text = (results[0].getInt("coins")).toString()
                     attack_power_count.text = (results[0].getInt("attack_power")).toString()
                 }
@@ -115,5 +122,6 @@ class HomeFragment : Fragment() {
         var currenthp = 1
         var attackpower = 1
         var playerlvl = 1
+        var player_gold = 0
     }
 }
