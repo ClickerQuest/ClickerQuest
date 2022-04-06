@@ -11,14 +11,15 @@
         android:layout_width="360px"
         android:layout_height="59dp"
         android:background="#BD3BED"
-        android:text="Gold"
         android:gravity="center_horizontal"
+        android:text="Gold"
         android:textColor="#00ccff"
         android:textSize="40dp"
         android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/upgrade_rows"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upgrade_rows"

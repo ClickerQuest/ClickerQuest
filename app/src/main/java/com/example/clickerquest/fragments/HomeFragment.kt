@@ -1,5 +1,6 @@
 package com.example.clickerquest.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +10,11 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.example.clickerquest.Monster
 import com.example.clickerquest.R
+import com.example.clickerquest.Settings
 import com.parse.FindCallback
 import com.parse.ParseException
 import com.parse.ParseQuery
@@ -54,6 +57,15 @@ class HomeFragment : Fragment() {
             onImageClicked()
         }
 
+        activesetting2.setOnClickListener {
+            onSettingsClicked()
+        }
+
+    }
+
+    private fun onSettingsClicked() {
+        val intent = Intent(context, Settings::class.java)
+        context?.startActivity(intent)
     }
 
     private fun onImageClicked() {
@@ -75,13 +87,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    open fun awardGold(playerGold: Int) {
+    private fun awardGold(playerGold: Int) {
         val user = ParseUser.getCurrentUser()
         user.put("gold", playerGold)
         user.saveInBackground()
     }
 
-    open fun getMonsters(stage: Int){
+    private fun getMonsters(stage: Int){
         val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
         val queryPlayer = ParseUser.getQuery()
         query.whereEqualTo(Monster.MONSTER_STAGE, stage)

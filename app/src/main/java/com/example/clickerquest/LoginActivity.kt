@@ -51,6 +51,9 @@ class LoginActivity : AppCompatActivity() {
 
         user.setUsername(username)
         user.setPassword(password)
+        user.put("level", 1)
+        user.put("attack_power", 0)
+        user.put("gold", 0)
 
         user.signUpInBackground { e ->
             if (e == null) {

@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
             item ->
 
             var fragmentToShow: Fragment? = null
+
             when (item.itemId) {
                 R.id.active_home -> {
                     fragmentToShow = HomeFragment()
@@ -32,8 +33,9 @@ class MainActivity : AppCompatActivity() {
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragmentToShow).commit()
             }
             true
+
         }
+        //load into home screen
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId = R.id.active_home
     }
-
-
 }
