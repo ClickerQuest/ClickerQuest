@@ -48,6 +48,7 @@ class HomeFragment : Fragment() {
         attack_power_count = view.findViewById(R.id.attack_power_Count)
 
         getMonsters(stage)
+        stage_number.text = "Stage $stage"
 
         imageView2.setOnClickListener {
             onImageClicked()
@@ -56,33 +57,42 @@ class HomeFragment : Fragment() {
     }
 
     private fun onImageClicked() {
-        if(stage > 5){
-            stage = 1
-        }
-
         currenthp--
         monster_health.text = currenthp.toString()
-        Log.i("img", "is clicked")
+        Log.i("Monster", "is clicked")
 
         if(currenthp == 0){
-            Log.i("img", "monster killed")
+            Log.i("Monster", "is killed")
             stage++
+            stage_number.text = "Stage $stage"
+            player_gold += award_gold
+            Log.i("User", "+ $player_gold")
+            awardGold(player_gold)
+            if(stage == 5){
+                stage = 1
+            }
             getMonsters(stage)
         }
     }
 
+    open fun awardGold(playerGold: Int) {
+        val user = ParseUser.getCurrentUser()
+        user.put("gold", playerGold)
+        user.saveInBackground()
+    }
+
     open fun getMonsters(stage: Int){
         val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
-        val query_player = ParseUser.getQuery()
+        val queryPlayer = ParseUser.getQuery()
         query.whereEqualTo(Monster.MONSTER_STAGE, stage)
-        query_player.whereEqualTo("username", ParseUser.getCurrentUser())
+        queryPlayer.whereEqualTo("username", (ParseUser.getCurrentUser()).username)
         query.findInBackground(object: FindCallback<Monster> {
             override fun done(objects: MutableList<Monster>?, e: ParseException?) {
                 if (e != null) {
                     Log.e("Monsters", "Error getting monsters $e")
                 } else {
                     val results = query.find()
-                    if (!results.isEmpty()) {
+                    if (results.isNotEmpty()) {
                         val objectId = results[0].objectId
                         Log.i("Monsters", "$objectId")
 
@@ -90,6 +100,7 @@ class HomeFragment : Fragment() {
                         monster_name.text = results[0].getName()
                         monster_health.text = results[0].getHealth().toString()
                         currenthp = results[0].getHealth()
+                        award_gold = results[0].getGold()
                         view?.let {
                             Glide.with(it.context).load(results[0].getImage()?.url).into(imageView2)
                         }
@@ -98,19 +109,22 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-        query_player.findInBackground { objects, e ->
+        queryPlayer.findInBackground { objects, e ->
             if (e != null) {
                 Log.e("User", "Error getting user $e")
             } else {
-                val results = query.find()
-                if (!results.isEmpty()) {
+                val results = queryPlayer.find()
+                if (results.isNotEmpty()) {
                     val objectId = results[0].objectId
                     Log.i("User", "$objectId")
 
                     //player
-                    player_gold = results[0].getInt("coins")
-                    gold_count.text = (results[0].getInt("coins")).toString()
+                    player_gold = results[0].getInt("gold")
+                    gold_count.text = (results[0].getInt("gold")).toString()
                     attack_power_count.text = (results[0].getInt("attack_power")).toString()
+                }
+                else{
+                    Log.e("User", "cannot find user")
                 }
             }
         }
@@ -123,5 +137,6 @@ class HomeFragment : Fragment() {
         var attackpower = 1
         var playerlvl = 1
         var player_gold = 0
+        var award_gold = 0
     }
 }
