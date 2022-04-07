@@ -14,10 +14,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //ParseUser.logOut()
-
         if (ParseUser.getCurrentUser() != null) {
-            goToMainActivity()
+            goToStart()
         }
 
         findViewById<Button>(R.id.loginbutton).setOnClickListener {
@@ -38,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
             if (user != null) {
                 Log.i("Login", "Successfully logged in")
                 Toast.makeText(this,"Welcome $username!", Toast.LENGTH_SHORT).show()
-                goToMainActivity()
+                goToStart()
             } else {
                 e.printStackTrace()
                 Toast.makeText(this,"Incorrect username or password", Toast.LENGTH_SHORT).show()
@@ -53,13 +51,15 @@ class LoginActivity : AppCompatActivity() {
         user.setPassword(password)
         user.put("level", 1)
         user.put("attack_power", 1)
+        user.put("stage_progress", 1)
+        user.put("stage_cycle", 1)
         user.put("gold", 0)
 
         user.signUpInBackground { e ->
             if (e == null) {
                 Log.i("Signup", "Successfully signed up " + user.username)
                 Toast.makeText(this,"Welcome $username!", Toast.LENGTH_SHORT).show()
-                goToMainActivity()
+                goToStart()
             } else {
                 e.printStackTrace()
                 Toast.makeText(this,"Username already taken", Toast.LENGTH_SHORT).show()
@@ -67,8 +67,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToMainActivity() {
-        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+    private fun goToStart() {
+        val intent = Intent(this@LoginActivity, StartMenu::class.java)
         startActivity(intent)
         finish()
     }

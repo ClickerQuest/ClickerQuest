@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             true
 
         }
-        //load into home screen
+
         findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId = R.id.active_home
     }
 }

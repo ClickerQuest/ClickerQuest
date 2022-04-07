@@ -22,6 +22,14 @@ import com.parse.ParseUser
 
 class HomeFragment : Fragment() {
 
+    lateinit var activesetting2: ImageButton
+    lateinit var imageView2:ImageView
+    lateinit var stage_number: TextView
+    lateinit var monster_health:TextView
+    lateinit var gold_count:TextView
+    lateinit var monster_name:TextView
+    lateinit var attack_power_count:TextView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,54 +49,81 @@ class HomeFragment : Fragment() {
         monster_name = view.findViewById(R.id.monster_name)
         attack_power_count = view.findViewById(R.id.attack_power_Count)
 
+        getUsers()
         getMonsters(stage)
-        stage_number.text = "Stage $stage"
 
         imageView2.setOnClickListener {
-            onImageClicked()
+            currenthp -= attackpower
+            monster_health.text = currenthp.toString()
+            Log.i("Monster", "is clicked")
+
+            if(currenthp <= 0){
+                Log.i("Monster", "is killed")
+                stage++
+                stageprogress++
+                player_gold += award_gold
+                gold_count.text = player_gold.toString()
+                Log.i("User", "+ $player_gold")
+                awardGold(player_gold)
+                if(stage > 5){
+                    stage = 1
+                }
+                getMonsters(stage)
+            }
         }
 
         activesetting2.setOnClickListener {
-            onSettingsClicked()
+            val intent = Intent(context, Settings::class.java)
+            context?.startActivity(intent)
         }
 
-    }
-
-    private fun onSettingsClicked() {
-        val intent = Intent(context, Settings::class.java)
-        context?.startActivity(intent)
-    }
-
-    private fun onImageClicked() {
-        currenthp -= attackpower
-        monster_health.text = currenthp.toString()
-        Log.i("Monster", "is clicked")
-
-        if(currenthp <= 0){
-            Log.i("Monster", "is killed")
-            stage++
-            stage_number.text = "Stage $stage"
-            player_gold += award_gold
-            Log.i("User", "+ $player_gold")
-            awardGold(player_gold)
-            if(stage > 5){
-                stage = 1
-            }
-            getMonsters(stage)
-        }
     }
 
     private fun awardGold(playerGold: Int) {
         val user = ParseUser.getCurrentUser()
         user.put("gold", playerGold)
+        user.put("stage_progress", stageprogress)
+        user.put("stage_cycle", stage)
         user.saveInBackground()
     }
 
-    private fun getMonsters(stage: Int){
-        val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
+    private fun getUsers(){
         val queryPlayer = ParseUser.getQuery()
-        query.whereEqualTo(Monster.MONSTER_STAGE, stage)
         queryPlayer.whereEqualTo("username", (ParseUser.getCurrentUser()).username)
+
+        queryPlayer.findInBackground { objects, e ->
+            if (e != null) {
+                Log.e("User", "Error getting user $e")
+            } else {
+                val results = queryPlayer.find()
+                if (results.isNotEmpty()) {
+                    val objectId = results[0].objectId
+                    Log.i("User", "$objectId")
+
+                    //player
+                    playerlvl = results[0].getInt("level")
+                    player_gold = results[0].getInt("gold")
+                    gold_count.text = (results[0].getInt("gold")).toString()
+                    attackpower = results[0].getInt("attack_power")
+                    attack_power_count.text = (results[0].getInt("attack_power")).toString()
+
+                    stageprogress = results[0].getInt("stage_progress")
+                    stage = results[0].getInt("stage_cycle")
+                }
+                else{
+                    Log.e("User", "cannot find user")
+                }
+            }
+        }
+    }
+
+
+    private fun getMonsters(stage: Int){
+
+        stage_number.text = "Stage " + stageprogress.toString()
+
+        val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
+        query.whereEqualTo(Monster.MONSTER_STAGE, stage)
         query.findInBackground(object: FindCallback<Monster> {
             override fun done(objects: MutableList<Monster>?, e: ParseException?) {
                 if (e != null) {
@@ -101,8 +136,9 @@ class HomeFragment : Fragment() {
 
                         //monster
                         monster_name.text = results[0].getName()
-                        monster_health.text = results[0].getHealth().toString()
                         currenthp = results[0].getHealth()
+                        currenthp += 10* playerlvl
+                        monster_health.text = currenthp.toString()
                         award_gold = results[0].getGold()
                         view?.let {
                             Glide.with(it.context).load(results[0].getImage()?.url).into(imageView2)
@@ -112,37 +148,9 @@ class HomeFragment : Fragment() {
                 }
             }
         })
-        queryPlayer.findInBackground { objects, e ->
-            if (e != null) {
-                Log.e("User", "Error getting user $e")
-            } else {
-                val results = queryPlayer.find()
-                if (results.isNotEmpty()) {
-                    val objectId = results[0].objectId
-                    Log.i("User", "$objectId")
-
-                    //player
-                    player_gold = results[0].getInt("gold")
-                    gold_count.text = player_gold.toString()
-                    attackpower = results[0].getInt("attack_power")
-                    attack_power_count.text = attackpower.toString()
-                }
-                else{
-                    Log.e("User", "cannot find user")
-                }
-            }
-        }
     }
 
     companion object{
-        lateinit var activesetting2: ImageButton
-
-        lateinit var imageView2:ImageView
-        lateinit var stage_number: TextView
-        lateinit var monster_health:TextView
-        lateinit var gold_count:TextView
-        lateinit var monster_name:TextView
-        lateinit var attack_power_count:TextView
         //monster + stage info
         var stage = 1
         var currenthp = 1
@@ -150,5 +158,6 @@ class HomeFragment : Fragment() {
         var playerlvl = 1
         var player_gold = 0
         var award_gold = 0
+        var stageprogress = 1
     }
 }

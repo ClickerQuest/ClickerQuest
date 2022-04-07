@@ -11,6 +11,10 @@ class Upgrades : ParseObject(){
         return getString(des)
     }
 
+    fun getUpgradeTag(): String? {
+        return getString(tag)
+    }
+
     fun getAmount(): Int {
         return getInt(amount)
     }
@@ -23,6 +27,7 @@ class Upgrades : ParseObject(){
         const val des = "description"
         const val amount = "amount"
         const val cost = "cost"
+        const val tag = "upgrade_tag"
     }
 
 }

@@ -14,10 +14,6 @@ class Monster : ParseObject() {
         return getInt(MONSTER_HEALTH)
     }
 
-    fun getCurrentHealth(): Int {
-        return getInt(MONSTER_CURRENTHP)
-    }
-
     fun getImage(): ParseFile? {
         return getParseFile(MONSTER_IMAGE)
     }
@@ -33,7 +29,6 @@ class Monster : ParseObject() {
     companion object{
         const val MONSTER_NAME = "name"
         const val MONSTER_HEALTH = "base_health"
-        const val MONSTER_CURRENTHP = "current_health"
         const val MONSTER_IMAGE = "monsterImage"
         const val MONSTER_STAGE = "stageNumber"
         const val GOLD = "coin_drop"

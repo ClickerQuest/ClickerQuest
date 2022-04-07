@@ -1,18 +1,16 @@
 package com.example.clickerquest
 
+import android.app.AlertDialog
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.clickerquest.fragments.HomeFragment
 import com.example.clickerquest.fragments.UpgradeFragment
-import com.parse.FindCallback
-import com.parse.ParseException
-import com.parse.ParseQuery
 import com.parse.ParseUser
 
 class UpgradeAdapter (val context: Context, val upgrades: List<Upgrades>): RecyclerView.Adapter<UpgradeAdapter.ViewHolder>() {
@@ -34,28 +32,55 @@ class UpgradeAdapter (val context: Context, val upgrades: List<Upgrades>): Recyc
 
     class ViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         val description: TextView = itemView.findViewById(R.id.upgrade_description)
-        val APamount: TextView = itemView.findViewById(R.id.upgrade_cost_description)
+        val LvLamount: TextView = itemView.findViewById(R.id.upgrade_amount)
         val upgradeButton: Button = itemView.findViewById(R.id.upgrade_button)
 
         fun bind(up: Upgrades) {
-            val amount = up.getAmount()
-            val cost = up.getCost()
+            var amount = up.getAmount()
+            var cost = up.getCost() * HomeFragment.playerlvl
             description.text = up.getDesc() + "\n COST: $cost"
-            APamount.text = "+$amount AP"
+            LvLamount.text = "+$amount lvl"
             upgradeButton.text = "BUY"
 
             upgradeButton.setOnClickListener {
-                HomeFragment.player_gold -= cost
-                UpgradeFragment.gold_text = HomeFragment.player_gold.toString()
-                HomeFragment.attackpower += amount
-                updatePlayer(HomeFragment.player_gold, HomeFragment.attackpower)
+
+                val currentGold = HomeFragment.player_gold
+
+                if((currentGold - cost)  < 0){
+                    val alert = AlertDialog.Builder(itemView.context)
+                    alert.setTitle("Out of Gold!")
+                    alert.setMessage("cannot afford purchase")
+                    alert.setPositiveButton("ok"){dialogInterface, which ->
+                        Toast.makeText(itemView.context,"You need more gold!",Toast.LENGTH_LONG).show()
+                    }
+
+                    val alertDialog: AlertDialog = alert.create()
+                    // Set other dialog properties
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+                }
+                else {
+                    if(up.getUpgradeTag() == "level"){
+                        var player_ap = amount * 2 + (HomeFragment.attackpower)
+
+                        HomeFragment.player_gold -= cost
+                        UpgradeFragment.gold_text = HomeFragment.player_gold.toString()
+                        HomeFragment.playerlvl += amount
+                        updatePlayer(HomeFragment.player_gold, HomeFragment.playerlvl, player_ap)
+
+                        cost = up.getCost() * HomeFragment.playerlvl
+
+                        description.text = up.getDesc() + "\n COST: $cost"
+                    }
+                }
             }
         }
 
-        private fun updatePlayer(playerGold: Int, attackpower: Int) {
+        private fun updatePlayer(playerGold: Int, playerlvl: Int, player_ap: Int) {
             val user = ParseUser.getCurrentUser()
             user.put("gold", playerGold)
-            user.put("attack_power", attackpower)
+            user.put("level", playerlvl)
+            user.put("attack_power", player_ap)
             user.saveInBackground()
 
             UpgradeFragment.gold_count.text = playerGold.toString()
