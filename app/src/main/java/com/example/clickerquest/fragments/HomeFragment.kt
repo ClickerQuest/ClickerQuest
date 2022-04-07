@@ -10,7 +10,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.example.clickerquest.Monster
 import com.example.clickerquest.R
@@ -22,7 +21,8 @@ import com.parse.ParseUser
 
 class HomeFragment : Fragment() {
 
-    lateinit var activesetting2: ImageButton
+    private lateinit var activesetting2: ImageButton
+
     lateinit var imageView2:ImageView
     lateinit var stage_number: TextView
     lateinit var monster_health:TextView
@@ -30,10 +30,7 @@ class HomeFragment : Fragment() {
     lateinit var monster_name:TextView
     lateinit var attack_power_count:TextView
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -52,6 +49,8 @@ class HomeFragment : Fragment() {
         getUsers()
         getMonsters(stage)
 
+        stage_number.text = "Stage " + stageprogress.toString()
+
         imageView2.setOnClickListener {
             currenthp -= attackpower
             monster_health.text = currenthp.toString()
@@ -63,12 +62,13 @@ class HomeFragment : Fragment() {
                 stageprogress++
                 player_gold += award_gold
                 gold_count.text = player_gold.toString()
-                Log.i("User", "+ $player_gold")
                 awardGold(player_gold)
                 if(stage > 5){
                     stage = 1
                 }
                 getMonsters(stage)
+
+                stage_number.text = "Stage " + stageprogress.toString()
             }
         }
 
@@ -97,9 +97,6 @@ class HomeFragment : Fragment() {
             } else {
                 val results = queryPlayer.find()
                 if (results.isNotEmpty()) {
-                    val objectId = results[0].objectId
-                    Log.i("User", "$objectId")
-
                     //player
                     playerlvl = results[0].getInt("level")
                     player_gold = results[0].getInt("gold")
@@ -117,11 +114,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun getMonsters(stage: Int){
-
-        stage_number.text = "Stage " + stageprogress.toString()
-
         val query: ParseQuery<Monster> = ParseQuery.getQuery(Monster::class.java)
         query.whereEqualTo(Monster.MONSTER_STAGE, stage)
         query.findInBackground(object: FindCallback<Monster> {
@@ -131,13 +124,10 @@ class HomeFragment : Fragment() {
                 } else {
                     val results = query.find()
                     if (results.isNotEmpty()) {
-                        val objectId = results[0].objectId
-                        Log.i("Monsters", "$objectId")
-
                         //monster
                         monster_name.text = results[0].getName()
                         currenthp = results[0].getHealth()
-                        currenthp += 10* playerlvl
+                        currenthp += 10 * stageprogress
                         monster_health.text = currenthp.toString()
                         award_gold = results[0].getGold()
                         view?.let {
@@ -153,11 +143,11 @@ class HomeFragment : Fragment() {
     companion object{
         //monster + stage info
         var stage = 1
-        var currenthp = 1
-        var attackpower = 1
-        var playerlvl = 1
+        var currenthp = 0
+        var attackpower = 0
+        var playerlvl = 0
         var player_gold = 0
         var award_gold = 0
-        var stageprogress = 1
+        var stageprogress = 0
     }
 }
