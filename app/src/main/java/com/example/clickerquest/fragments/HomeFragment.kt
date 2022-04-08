@@ -1,6 +1,7 @@
 package com.example.clickerquest.fragments
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,6 +31,9 @@ class HomeFragment : Fragment() {
     lateinit var monster_name:TextView
     lateinit var attack_power_count:TextView
 
+
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -51,19 +55,22 @@ class HomeFragment : Fragment() {
 
         stage_number.text = "Stage " + stageprogress.toString()
 
+        var Hitsound = MediaPlayer.create(context,R.raw.hit)
+
         imageView2.setOnClickListener {
+            Hitsound.start()
             currenthp -= attackpower
             monster_health.text = currenthp.toString()
             Log.i("Monster", "is clicked")
 
-            if(currenthp <= 0){
+            if(currenthp <= 0) {
                 Log.i("Monster", "is killed")
                 stage++
                 stageprogress++
                 player_gold += award_gold
                 gold_count.text = player_gold.toString()
                 awardGold(player_gold)
-                if(stage > 5){
+                if (stage > 5) {
                     stage = 1
                 }
                 getMonsters(stage)
