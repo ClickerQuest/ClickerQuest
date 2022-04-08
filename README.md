@@ -37,7 +37,6 @@ Clicker Quest is a fun clicker role-playing game! Click as fast as you can, as l
 **Optional Nice-to-have Stories**
 
 - [x] User can sign up and login to save their game data across devices
-- [ ] Shop feature where users can use real money to purchase currency
 - [ ] Coins will generate while in the app and off the app
 - [ ] Add animations to creatures when they are attacked
 
